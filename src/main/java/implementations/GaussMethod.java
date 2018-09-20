@@ -3,11 +3,12 @@ package implementations;
 import interfaces.Method;
 
 import static utils.Actions.*;
-import static utils.InputOutput.printVector;
 
 public class GaussMethod implements Method {
 
-    public double[] calculate(double[][] a, double[] b) {
+    public double[] calculate(double[][] matrix, double[] vector) {
+        double[][] a = copyMatrix(matrix);
+        double[] b = copyVector(vector);
         int n = a.length;
         double[][] m = new double[n][n];
         double[] x = new double[n];
@@ -57,17 +58,12 @@ public class GaussMethod implements Method {
         int n = a.length;
         double[][] e = generateIdentityMatrix(n, n);
         double[][] x = new double[n][n];
-        double[] tempE = new double[n];
-        double[] tempX;
+        double[] b = new double[n];
         for (int i = 0; i < n; i++) {
+            b = calculate(a, e[n - i - 1]);
             for (int j = 0; j < n; j++) {
-                tempE[j] = e[j][i];
+                x[j][i] = b[j];
             }
-            tempX = calculate(a, tempE);
-            for (int j = 0; j < n; j++) {
-                x[j][i] = tempX[j];
-            }
-            printVector(tempX);
         }
         return x;
     }

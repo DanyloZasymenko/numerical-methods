@@ -1,24 +1,32 @@
 import implementations.GaussMethod;
 import interfaces.Method;
 
-import static utils.InputOutput.printMatrix;
+import java.io.FileNotFoundException;
+
+import static utils.Actions.*;
+import static utils.InputOutput.*;
 
 public class Lab_1 {
 
-    private static final int N = 3;
+    public static void main(String[] args) throws FileNotFoundException {
 
-    public static void main(String[] args) {
-
-        double[][] a = {{0, 1, -6, -4}, {3, -1, -6, -4}, {2, 3, 9, 2}, {3, 2, 3, 8}};
-        double[] b = {6, 2, 6, -7};
-        double[][] i = {{1, 2}, {3, 4}};
-        double[][] a1 = {{1, 2, -1, -2}, {3, 8, 0, -4}, {2, 2, -4, -3}, {3, 8, -1, -6}};
+        double[][] matrix = readMatrixFromFile("matrix.txt");
 
         Method method = new GaussMethod();
         System.err.println("Input matrix: ");
-        printMatrix(a1);
-//        method.calculate(a, b);
-        printMatrix(method.invert(a1));
-
+        printMatrix(matrix);
+        if (matrix.length == matrix[0].length) {
+            System.err.println("Inverse matrix: ");
+            printMatrix(method.invert(matrix));
+            System.err.println("Result of multiplication: ");
+            printMatrix(multiplyMatrix(matrix, method.invert(matrix)));
+        } else if (matrix[0].length - matrix.length == 1) {
+            double[][] a = getWithoutLastColumn(matrix);
+            double[] b = getLastColumn(matrix);
+            System.err.println("Calculated: ");
+            printVector(method.calculate(a, b));
+        } else {
+            System.err.println("Can not do anything");
+        }
     }
 }
