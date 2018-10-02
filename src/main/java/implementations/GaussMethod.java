@@ -3,7 +3,7 @@ package implementations;
 import interfaces.Method;
 
 import static utils.Actions.*;
-import static utils.InputOutput.printMatrix;
+import static utils.InputOutput.printVector;
 
 public class GaussMethod implements Method {
 
@@ -61,7 +61,9 @@ public class GaussMethod implements Method {
         double[][] x = new double[n][n];
         double[] b = new double[n];
         for (int i = 0; i < n; i++) {
-            b = calculate(a, e[n - i - 1]);
+            System.err.println("e[" + i + "]:");
+            printVector(e[i]);
+            b = calculate(a, e[i]);
             for (int j = 0; j < n; j++) {
                 x[j][i] = b[j];
             }

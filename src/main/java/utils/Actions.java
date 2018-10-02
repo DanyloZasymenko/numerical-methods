@@ -111,4 +111,17 @@ public class Actions {
         }
         return result;
     }
+
+    public static String writeDigits(double number) {
+        int before = String.valueOf(number).split("\\.")[0].length();
+        int after = String.valueOf(number).split("\\.")[1].length();
+        System.err.println("before: " + before + " after: " + after);
+        if (before + after > 8) {
+            after = (before - after < 0) ? 8 - before : 0;
+        } else {
+            before = 8 - before - after;
+        }
+        System.err.format("before: " + before + " after: " + after+"[%" + before + "." + after + "f]\n", number);
+        return "%" + before + "." + after + "f";
+    }
 }

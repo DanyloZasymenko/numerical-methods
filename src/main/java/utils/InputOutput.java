@@ -1,10 +1,11 @@
 package utils;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import static utils.Actions.writeDigits;
 
 public class InputOutput {
 
@@ -56,4 +57,19 @@ public class InputOutput {
         }
         return result;
     }
+
+    public static void writeMatrixIntoFile(double[][] matrix, String path, boolean append) throws IOException {
+        PrintWriter writer = new PrintWriter(new FileWriter(path, append));
+        for (int i = 0; i < matrix.length; i++) {
+            writer.format("|");
+            for (int j = 0; j < matrix[0].length; j++) {
+                writer.format("%7.1f ", matrix[i][j]);
+            }
+            writer.format("|\n");
+        }
+        writer.format("|\n");
+        writer.close();
+    }
+
+
 }

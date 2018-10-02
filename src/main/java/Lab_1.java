@@ -1,18 +1,22 @@
 import implementations.GaussMethod;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 
-import static utils.Actions.*;
+import static utils.Actions.getLastColumn;
+import static utils.Actions.getWithoutLastColumn;
 import static utils.InputOutput.*;
 
 public class Lab_1 {
 
-    public static void main(String[] args) throws FileNotFoundException {
+    //    private static final String INPUT_FILE_PATH= "matrix.txt";
+    private static final String INPUT_FILE_PATH = "matrix1.txt";
+    //    private static final String INPUT_FILE_PATH = "matrix2.txt";
+//    private static final String INPUT_FILE_PATH = "matrix3.txt";
+    private static final String OUTPUT_FILE_PATH = "result.txt";
 
-        double[][] matrix = readMatrixFromFile("matrix.txt");
-//        double[][] matrix = readMatrixFromFile("matrix1.txt");
-//        double[][] matrix = readMatrixFromFile("matrix2.txt");
-//        double[][] matrix = readMatrixFromFile("matrix3.txt");
+    public static void main(String[] args) throws IOException {
+
+        double[][] matrix = readMatrixFromFile(INPUT_FILE_PATH);
 
         GaussMethod method = new GaussMethod();
         System.err.println("Input matrix: ");
@@ -20,6 +24,7 @@ public class Lab_1 {
         if (matrix.length == matrix[0].length) {
             System.err.println("Inverse matrix: ");
             printMatrix(method.invert(matrix));
+            writeMatrixIntoFile(method.invert(matrix), OUTPUT_FILE_PATH,true);
 //            System.err.println("Result of multiplication: ");
 //            printMatrix(multiplyMatrix(matrix, method.invert(matrix)));
         } else if (matrix[0].length - matrix.length == 1) {
