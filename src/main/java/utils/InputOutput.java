@@ -12,7 +12,7 @@ public class InputOutput {
     public static void printVector(double[] vector) {
         System.err.print("[");
         for (double i : vector) {
-            System.err.format("%7.1f", i);
+            System.err.format(" " + writeDigits(i), i);
         }
         System.err.println("]");
     }
@@ -21,7 +21,7 @@ public class InputOutput {
         System.err.println("[");
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
-                System.err.format("%7.1f ", matrix[i][j]);
+                System.err.format(" " + writeDigits(matrix[i][j]), matrix[i][j]);
             }
             System.err.println();
         }
@@ -32,9 +32,9 @@ public class InputOutput {
         System.err.println("[");
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
-                System.err.format("%7.1f ", matrix[i][j]);
+                System.err.format(" " + writeDigits(matrix[i][j]), matrix[i][j]);
             }
-            System.err.format(" |%7.1f\n", vector[i]);
+            System.err.format("| " + writeDigits(vector[i]) + "\n", vector[i]);
         }
         System.err.println("]");
     }
@@ -63,7 +63,7 @@ public class InputOutput {
         for (int i = 0; i < matrix.length; i++) {
             writer.format("|");
             for (int j = 0; j < matrix[0].length; j++) {
-                writer.format("%7.1f ", matrix[i][j]);
+                writer.format(writeDigits(matrix[i][j]) + " ", matrix[i][j]);
             }
             writer.format("|\n");
         }

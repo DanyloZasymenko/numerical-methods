@@ -13,9 +13,9 @@ public class OrthogonalizationMethod implements Method {
         int n = matrix.length;
         double[][] a = copyMatrix(matrix, n + 1, n + 1);
         double[] b = copyVector(vector);
-        double[][] rr = new double[n + 1][n + 1];
-        double[][] ss = new double[n + 1][n + 1];
-        double[] ppn = new double[n + 1];
+        double[][] rr = new double[n][n];
+        double[][] ss = new double[n][n];
+        double[] ppn = new double[n];
         double[] x = new double[n];
         double s2 = 0;
         double s = 0;
@@ -68,8 +68,8 @@ public class OrthogonalizationMethod implements Method {
         }
         System.err.println("rr:");
         printMatrix(rr);
-        for (int i = 0; i < n - 1; i++) {
-            x[i] = rr[n][i] / rr[n][n];
+        for (int i = 0; i < n; i++) {
+            x[i] = rr[n-1][i] / rr[n-1][n-1];
         }
 
         return x;

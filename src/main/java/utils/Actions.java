@@ -2,6 +2,8 @@ package utils;
 
 public class Actions {
 
+    private static final int N_FORMAT = 8;
+
     public static double[][] generateIdentityMatrix(int m, int n) {
         double[][] matrix = new double[m][n];
         for (int i = 0; i < m; i++) {
@@ -29,11 +31,12 @@ public class Actions {
 
     public static double[] transformVector(double[][] a, double[] b, int k) {
         int maxIndex = getMaxIndex(a, k);
+        double[] copy = copyVector(b);
         double temp;
-        temp = b[k];
-        b[k] = b[maxIndex];
-        b[maxIndex] = temp;
-        return b;
+        temp = copy[k];
+        copy[k] = copy[maxIndex];
+        copy[maxIndex] = temp;
+        return copy;
     }
 
     private static int getMaxIndex(double[][] a, int k) {
@@ -87,9 +90,8 @@ public class Actions {
         int bRows = b.length;
         int bColumns = b[0].length;
         double[][] result = new double[aRows][bColumns];
-
         if (aColumns != bRows) {
-            throw new IllegalArgumentException("A:Rows: " + aColumns + " do not match B:Columns " + bRows + ".");
+            throw new IllegalArgumentException("a:Rows: " + aColumns + " do not match B:Columns " + bRows + ".");
         }
         for (int i = 0; i < aRows; i++) {
             for (int j = 0; j < bColumns; j++) {
@@ -103,7 +105,6 @@ public class Actions {
                 }
             }
         }
-
         return result;
     }
 
@@ -131,13 +132,40 @@ public class Actions {
     public static String writeDigits(double number) {
         int before = String.valueOf(number).split("\\.")[0].length();
         int after = String.valueOf(number).split("\\.")[1].length();
-        System.err.println("before: " + before + " after: " + after);
-        if (before + after > 8) {
-            after = (before - after < 0) ? 8 - before : 0;
+        if (before + after > N_FORMAT) {
+            after = (before - after < 0) ? N_FORMAT - before : 0;
         } else {
-            before = 8 - before - after;
+            before = N_FORMAT - after;
         }
-        System.err.format("before: " + before + " after: " + after + "[%" + before + "." + after + "f]\n", number);
         return "%" + before + "." + after + "f";
+    }
+
+    public static double findDeterminant(double[][] a) {
+        double determinant = 0;
+        int n = a.length;
+        if (n == 1) {
+            determinant = a[0][0];
+        } else if (n == 2) {
+            determinant = a[0][0] * a[1][1] - a[1][0] * a[0][1];
+        } else {
+            determinant = 0;
+            for (int j1 = 0; j1 < n; j1++) {
+                double[][] m = new double[n - 1][];
+                for (int k = 0; k < (n - 1); k++) {
+                    m[k] = new double[n - 1];
+                }
+                for (int i = 1; i < n; i++) {
+                    int j2 = 0;
+                    for (int j = 0; j < n; j++) {
+                        if (j == j1)
+                            continue;
+                        m[i - 1][j2] = a[i][j];
+                        j2++;
+                    }
+                }
+                determinant += Math.pow(-1.0, 1.0 + j1 + 1.0) * a[0][j1] * findDeterminant(m);
+            }
+        }
+        return determinant;
     }
 }
