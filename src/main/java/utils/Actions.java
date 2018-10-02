@@ -47,10 +47,18 @@ public class Actions {
     public static double[][] copyMatrix(double[][] a) {
         int m = a.length;
         int n = a[0].length;
+        return copyMatrix(a, m, n);
+    }
+
+    public static double[][] copyMatrix(double[][] a, int m, int n) {
         double[][] copy = new double[m][n];
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                copy[i][j] = a[i][j];
+                if (i >= a.length || j >= a[0].length) {
+                    copy[i][j] = 0;
+                } else {
+                    copy[i][j] = a[i][j];
+                }
             }
         }
         return copy;
@@ -58,9 +66,17 @@ public class Actions {
 
     public static double[] copyVector(double[] b) {
         int n = b.length;
+        return copyVector(b, n);
+    }
+
+    public static double[] copyVector(double[] b, int n) {
         double[] copy = new double[n];
         for (int i = 0; i < n; i++) {
-            copy[i] = b[i];
+            if (i >= b.length) {
+                copy[i] = 0;
+            } else {
+                copy[i] = b[i];
+            }
         }
         return copy;
     }
@@ -121,7 +137,7 @@ public class Actions {
         } else {
             before = 8 - before - after;
         }
-        System.err.format("before: " + before + " after: " + after+"[%" + before + "." + after + "f]\n", number);
+        System.err.format("before: " + before + " after: " + after + "[%" + before + "." + after + "f]\n", number);
         return "%" + before + "." + after + "f";
     }
 }
