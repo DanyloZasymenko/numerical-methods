@@ -67,7 +67,7 @@ public class InputOutput {
             }
             writer.format("|\n");
         }
-        writer.format("|\n");
+        writer.format("\n");
         writer.close();
     }
 

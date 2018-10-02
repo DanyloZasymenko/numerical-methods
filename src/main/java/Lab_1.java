@@ -8,11 +8,12 @@ import static utils.InputOutput.*;
 
 public class Lab_1 {
 
-    //    private static final String INPUT_FILE_PATH= "matrix.txt";
+//    private static final String INPUT_FILE_PATH = "matrix.txt";
     private static final String INPUT_FILE_PATH = "matrix1.txt";
-    //    private static final String INPUT_FILE_PATH = "matrix2.txt";
+//    private static final String INPUT_FILE_PATH = "matrix2.txt";
 //    private static final String INPUT_FILE_PATH = "matrix3.txt";
     private static final String OUTPUT_FILE_PATH = "result.txt";
+    private static final Boolean APPEND = false;
 
     public static void main(String[] args) throws IOException {
 
@@ -24,7 +25,7 @@ public class Lab_1 {
         if (matrix.length == matrix[0].length) {
             System.err.println("Inverse matrix: ");
             printMatrix(method.invert(matrix));
-            writeMatrixIntoFile(method.invert(matrix), OUTPUT_FILE_PATH,true);
+            writeMatrixIntoFile(method.invert(matrix), OUTPUT_FILE_PATH, APPEND);
 //            System.err.println("Result of multiplication: ");
 //            printMatrix(multiplyMatrix(matrix, method.invert(matrix)));
         } else if (matrix[0].length - matrix.length == 1) {
