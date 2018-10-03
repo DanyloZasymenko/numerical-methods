@@ -1,6 +1,5 @@
 import exceptions.OrthogonalizationMethodException;
 import implementations.OrthogonalizationMethod;
-import interfaces.Method;
 
 import java.io.IOException;
 
@@ -10,7 +9,7 @@ import static utils.InputOutput.*;
 
 public class Lab_2 {
 
-//    private static final String INPUT_FILE_PATH = "matrix5.txt";
+    //    private static final String INPUT_FILE_PATH = "matrix5.txt";
 //        private static final String INPUT_FILE_PATH = "matrix6.txt";
 //    private static final String INPUT_FILE_PATH = "matrix7.txt";
     private static final String INPUT_FILE_PATH = "matrix1.txt";
@@ -27,7 +26,7 @@ public class Lab_2 {
             printMatrix(a, b);
             printVector(method.calculate(a, b));
             writeVectorIntoFile(method.calculate(a, b), OUTPUT_FILE_PATH, false);
-        }catch (OrthogonalizationMethodException e){
+        } catch (OrthogonalizationMethodException e) {
             System.err.println(e.getMessage());
         }
     }

@@ -35,6 +35,23 @@ public class Actions {
         }
     }
 
+    public static boolean transform(double[][] a, int k) {
+        int maxIndex = k;
+        for (int i = k; i < a.length; i++) {
+            maxIndex = Math.abs(a[i][k]) >= Math.abs(a[maxIndex][k]) ? i : maxIndex;
+        }
+        if (maxIndex != k) {
+            double temp;
+            for (int i = 0; i < a.length; i++) {
+                temp = a[k][i];
+                a[k][i] = a[maxIndex][i];
+                a[maxIndex][i] = temp;
+            }
+            return true;
+        }
+        return false;
+    }
+
     public static double[][] copyMatrix(double[][] a) {
         int m = a.length;
         int n = a[0].length;

@@ -66,4 +66,26 @@ public class GaussMethod implements Method {
         return x;
     }
 
+    public double findDeterminant(double[][] matrix) {
+        double[][] a = copyMatrix(matrix);
+        int n = a.length;
+        double determinant = 1;
+        double[][] m = new double[n][n];
+        double[] x = new double[n];
+        for (int k = 0; k < n - 1; k++) {
+            transform(a, k);
+            for (int i = k + 1; i < n; i++) {
+                m[i][k] = -(a[i][k] / a[k][k]);
+                for (int j = k + 1; j < n; j++) {
+                    a[i][j] = a[i][j] + m[i][k] * a[k][j];
+                }
+                a[i][k] = 0;
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            determinant *= a[i][i];
+        }
+        return determinant;
+    }
+
 }
