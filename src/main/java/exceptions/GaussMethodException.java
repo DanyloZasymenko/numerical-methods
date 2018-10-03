@@ -5,7 +5,7 @@ public class GaussMethodException extends Exception {
     private String message;
 
     public GaussMethodException(String message) {
-        this.message = "GaussMethodException:[ " + message + "]";
+        this.message = "Gauss Method Exception:[ " + message + "]";
     }
 
     @Override

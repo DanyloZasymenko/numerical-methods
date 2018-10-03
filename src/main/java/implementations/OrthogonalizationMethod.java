@@ -1,162 +1,77 @@
 package implementations;
 
+import exceptions.OrthogonalizationMethodException;
 import interfaces.Method;
 
-import static utils.Actions.copyMatrix;
-import static utils.Actions.copyVector;
-import static utils.InputOutput.printMatrix;
-import static utils.InputOutput.printVector;
+import static utils.Actions.*;
 
 public class OrthogonalizationMethod implements Method {
 
-    public double[] calculate(double[][] matrix, double[] vector) {
-        int n = matrix.length;
-        double[][] a = copyMatrix(matrix, n + 1, n + 1);
-        double[] b = copyVector(vector);
+    public double[] calculate(double[][] matrix, double[] vector) throws OrthogonalizationMethodException {
+        int n = matrix.length + 1;
+        double[][] a = copyMatrix(matrix, n, n);
+        double[] b = copyVector(vector, n);
+        if (!isSymmetric(a)) {
+            throw new OrthogonalizationMethodException("Matrix is not symmetric!");
+        }
         double[][] rr = new double[n][n];
         double[][] ss = new double[n][n];
-        double[] ppn = new double[n];
-        double[] x = new double[n];
-        double s2 = 0;
-        double s = 0;
-        printMatrix(a);
-        printVector(b);
-        System.err.println(n);
-        // for i := 1 to n + 1 do
-//           begin
-//             A[i, n+1] := -b[i];
-//             if (i <= n) then
-//               A[n + 1, i] := 0
-//             else
-//               A[n + 1, i] := 1;
-//           end;
+        double[][] as = new double[n][n];
+        double[] x = new double[n - 1];
         for (int i = 0; i < n; i++) {
-            a[i][n] = -b[i];
+            a[i][n - 1] = -b[i];
         }
-        a[n][n] = 1;
-        printMatrix(a);
-//        for i := 1 to n + 1 do
-//           begin
-        for (int i = 0; i < n; i++) {
-//            if (i = 1) then
-//               begin
-            if (i == 0) {
-//                for j := 1 to n + 1 do
-//                   rr[i, j] := A[i, j];
-                for (int j = 0; j < n; j++) {
-                    rr[i][j] = a[i][j];
-                }
-//               end
-//             else
-//               begin
-            } else {
-                System.err.println("in else");
-//                 for l := 1 to i-1 do
-//                   begin
-                for (int l = 0; l < i; l++) {
-//                     S2 := 0;
-                    s2 = 0;
-//                     for z := 1 to n + 1 do
-//                       S2 := S2 + (A[i, z] * ss[l, z]);
-                    for (int z = 0; z < n; z++) {
-                        s2 += a[i][z] * ss[l][z];
-                    }
-                    System.err.println("s2=" + s2);
-                    System.err.println("before p loop");
-//                     for p := 1 to n + 1 do
-//                       begin
-                    for (int p = 0; p < n; p++) {
-                        System.err.println("in p loop");
-//                         if (l = 1) then
-//                           ppn[p] := (S2 * ss[l, p])
-                        if (l == 0) {
-                            ppn[p] = s2 * ss[l][p];
-                            System.err.println("ppn[" + p + "]=" + ppn[p]);
-//                         else
-//                           ppn[p] := ppn[p] + (S2 * ss[l, p]);
-                        } else {
-                            ppn[p] += s2 * ss[l][p];
-                            System.err.println("ppn[" + p + "]=" + ppn[p]);
-                        }
-//                   end;
-                    }
-//                   end;
-                }
-                System.err.println("ppn:");
-                printVector(ppn);
-//                 for j := 1 to n+1 do
-//                   rr[i, j] := A[i, j] - ppn[j];
-                for (int j = 0; j < n; j++) {
-                    rr[i][j] = a[i][j] - ppn[j];
-                }
-//               end;
-            }
-//               S := 0;
-            s = 0;
-//               for p := 1 to n + 1 do
-//                 S := S + sqr(rr[i, p]);
-            for (int p = 0; p < n; p++) {
-                s += Math.pow(rr[i][p], 2);
-            }
-//               for j := 1 to n+1 do
-//                 ss[i, j] := rr[i, j] / sqrt(S);
-            for (int j = 0; j < n; j++) {
-                ss[i][j] = rr[i][j] / Math.sqrt(s);
-            }
-//           end;
+        a[n - 1][n - 1] = 1;
+        for (int j = 0; j < n; j++) {
+            rr[0][j] = a[0][j];
         }
-        System.err.println("rr:");
-        printMatrix(rr);
-//         for i := 1 to n do
-//           X[i] := rr[n+1, i] / rr[n+1, n+1];
-        for (int i = 0; i < n; i++) {
+        for (int i = 1; i < n; i++) {
+            ss[i - 1] = getS(rr[i - 1]);
+            for (int j = 0; j < i; j++) {
+                as[j] = getASS(ss[j], getAS(a[i], ss[j]));
+                for (int k = 0; k < n; k++) {
+                    if (j == 0) {
+                        rr[i][k] = a[i][k] - as[j][k];
+                    } else {
+                        rr[i][k] -= as[j][k];
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < n - 1; i++) {
             x[i] = rr[n - 1][i] / rr[n - 1][n - 1];
         }
-
         return x;
     }
+
+    private double[] getS(double[] r) {
+        double[] copy = copyVector(r);
+        double euclideanNorm = 0;
+        for (double i : copy) {
+            euclideanNorm += i * i;
+        }
+        euclideanNorm = Math.sqrt(euclideanNorm);
+        for (int i = 0; i < copy.length; i++) {
+            copy[i] /= euclideanNorm;
+        }
+        return copy;
+    }
+
+    private double getAS(double[] a, double[] s) {
+        double[] copyA = copyVector(a);
+        double[] copyS = copyVector(s);
+        double result = 0;
+        for (int i = 0; i < copyA.length; i++) {
+            result += copyA[i] * copyS[i];
+        }
+        return result;
+    }
+
+    private double[] getASS(double[] a, double s) {
+        double[] result = new double[a.length];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = a[i] * s;
+        }
+        return result;
+    }
 }
-// for i := 1 to n + 1 do
-//           begin
-//             A[i, n+1] := -b[i];
-//             if (i <= n) then
-//               A[n + 1, i] := 0
-//             else
-//               A[n + 1, i] := 1;
-//           end;
-//
-//         for i := 1 to n + 1 do
-//           begin
-//             if (i = 1) then
-//               begin
-//                 for j := 1 to n + 1 do
-//                   rr[i, j] := A[i, j];
-//               end
-//             else
-//               begin
-//                 for l := 1 to i-1 do
-//                   begin
-//                     S2 := 0;
-//                     for z := 1 to n + 1 do
-//                       S2 := S2 + (A[i, z] * ss[l, z]);
-//                     for p := 1 to n + 1 do
-//                       begin
-//                         if (l = 1) then
-//                           ppn[p] := (S2 * ss[l, p])
-//                         else
-//                           ppn[p] := ppn[p] + (S2 * ss[l, p]);
-//                       end;
-//                   end;
-//
-//                 for j := 1 to n+1 do
-//                   rr[i, j] := A[i, j] - ppn[j];
-//               end;
-//               S := 0;
-//               for p := 1 to n + 1 do
-//                 S := S + sqr(rr[i, p]);
-//               for j := 1 to n+1 do
-//                 ss[i, j] := rr[i, j] / sqrt(S);
-//           end;
-//
-//         for i := 1 to n do
-//           X[i] := rr[n+1, i] / rr[n+1, n+1];

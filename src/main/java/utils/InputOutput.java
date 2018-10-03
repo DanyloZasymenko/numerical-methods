@@ -71,5 +71,15 @@ public class InputOutput {
         writer.close();
     }
 
+    public static void writeVectorIntoFile(double[] vector, String path, boolean append) throws IOException {
+        PrintWriter writer = new PrintWriter(new FileWriter(path, append));
+        writer.format("|");
+        for (double i : vector) {
+            writer.format(" %7.1f", i);
+        }
+        writer.format("|\n");
+        writer.close();
+    }
+
 
 }

@@ -7,7 +7,7 @@ import static utils.Actions.*;
 
 public class GaussMethod implements Method {
 
-    public double[] calculate(double[][] matrix, double[] vector) {
+    public double[] calculate(double[][] matrix, double[] vector) throws GaussMethodException {
         double[][] a = copyMatrix(matrix);
         double[] b = copyVector(vector);
         int n = a.length;
@@ -24,56 +24,46 @@ public class GaussMethod implements Method {
                 a[i][k] = 0;
             }
         }
-        try {
-            if (a[n - 1][n - 1] == 0) {
-                if (b[n - 1] == 0) {
-                    x[n - 1] = 0;
+        if (a[n - 1][n - 1] == 0) {
+            if (b[n - 1] == 0) {
+                x[n - 1] = 0;
+            } else {
+                throw new GaussMethodException("Max item is zero");
+            }
+        } else {
+            x[n - 1] = b[n - 1] / a[n - 1][n - 1];
+        }
+        double sum = 0;
+        for (int k = n - 2; k >= 0; k--) {
+            for (int j = n - 1; j > k; j--) {
+                sum += (a[k][j] * x[j]);
+            }
+            if (a[k][k] == 0) {
+                if ((b[k] - sum) == 0) {
+                    x[k] = 0;
                 } else {
                     throw new GaussMethodException("Max item is zero");
                 }
             } else {
-                x[n - 1] = b[n - 1] / a[n - 1][n - 1];
+                x[k] = (b[k] - sum) / a[k][k];
             }
-            double sum = 0;
-            for (int k = n - 2; k >= 0; k--) {
-                for (int j = n - 1; j > k; j--) {
-                    sum += (a[k][j] * x[j]);
-                }
-                if (a[k][k] == 0) {
-                    if ((b[k] - sum) == 0) {
-                        x[k] = 0;
-                    } else {
-                        throw new GaussMethodException("Max item is zero");
-                    }
-                } else {
-                    x[k] = (b[k] - sum) / a[k][k];
-                }
-                sum = 0;
-            }
-            return x;
-        }catch (GaussMethodException e){
-            System.err.println(e.getMessage());
-            return new double[n];
+            sum = 0;
         }
+        return x;
     }
 
-    public double[][] invert(double[][] a){
+    public double[][] invert(double[][] a) throws GaussMethodException {
         int n = a.length;
         double[][] e = generateIdentityMatrix(n, n);
         double[][] x = new double[n][n];
         double[] b = new double[n];
-        try {
-            for (int i = 0; i < n; i++) {
-                b = calculate(a, e[i]);
-                for (int j = 0; j < n; j++) {
-                    x[j][i] = b[j];
-                }
+        for (int i = 0; i < n; i++) {
+            b = calculate(a, e[i]);
+            for (int j = 0; j < n; j++) {
+                x[j][i] = b[j];
             }
-            return x;
-        }catch (Exception e1){
-            System.out.println(e1.getMessage());
-            return new double[n][n];
         }
+        return x;
     }
 
 }
