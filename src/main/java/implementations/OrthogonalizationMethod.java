@@ -22,54 +22,95 @@ public class OrthogonalizationMethod implements Method {
         printMatrix(a);
         printVector(b);
         System.err.println(n);
+        // for i := 1 to n + 1 do
+//           begin
+//             A[i, n+1] := -b[i];
+//             if (i <= n) then
+//               A[n + 1, i] := 0
+//             else
+//               A[n + 1, i] := 1;
+//           end;
         for (int i = 0; i < n; i++) {
             a[i][n] = -b[i];
         }
         a[n][n] = 1;
         printMatrix(a);
+//        for i := 1 to n + 1 do
+//           begin
         for (int i = 0; i < n; i++) {
+//            if (i = 1) then
+//               begin
             if (i == 0) {
+//                for j := 1 to n + 1 do
+//                   rr[i, j] := A[i, j];
                 for (int j = 0; j < n; j++) {
                     rr[i][j] = a[i][j];
                 }
+//               end
+//             else
+//               begin
             } else {
                 System.err.println("in else");
+//                 for l := 1 to i-1 do
+//                   begin
                 for (int l = 0; l < i; l++) {
+//                     S2 := 0;
                     s2 = 0;
+//                     for z := 1 to n + 1 do
+//                       S2 := S2 + (A[i, z] * ss[l, z]);
                     for (int z = 0; z < n; z++) {
                         s2 += a[i][z] * ss[l][z];
                     }
                     System.err.println("s2=" + s2);
                     System.err.println("before p loop");
+//                     for p := 1 to n + 1 do
+//                       begin
                     for (int p = 0; p < n; p++) {
                         System.err.println("in p loop");
+//                         if (l = 1) then
+//                           ppn[p] := (S2 * ss[l, p])
                         if (l == 0) {
                             ppn[p] = s2 * ss[l][p];
                             System.err.println("ppn[" + p + "]=" + ppn[p]);
+//                         else
+//                           ppn[p] := ppn[p] + (S2 * ss[l, p]);
                         } else {
                             ppn[p] += s2 * ss[l][p];
                             System.err.println("ppn[" + p + "]=" + ppn[p]);
                         }
+//                   end;
                     }
+//                   end;
                 }
                 System.err.println("ppn:");
                 printVector(ppn);
+//                 for j := 1 to n+1 do
+//                   rr[i, j] := A[i, j] - ppn[j];
                 for (int j = 0; j < n; j++) {
                     rr[i][j] = a[i][j] - ppn[j];
                 }
+//               end;
             }
+//               S := 0;
             s = 0;
+//               for p := 1 to n + 1 do
+//                 S := S + sqr(rr[i, p]);
             for (int p = 0; p < n; p++) {
                 s += Math.pow(rr[i][p], 2);
             }
+//               for j := 1 to n+1 do
+//                 ss[i, j] := rr[i, j] / sqrt(S);
             for (int j = 0; j < n; j++) {
                 ss[i][j] = rr[i][j] / Math.sqrt(s);
             }
+//           end;
         }
         System.err.println("rr:");
         printMatrix(rr);
+//         for i := 1 to n do
+//           X[i] := rr[n+1, i] / rr[n+1, n+1];
         for (int i = 0; i < n; i++) {
-            x[i] = rr[n-1][i] / rr[n-1][n-1];
+            x[i] = rr[n - 1][i] / rr[n - 1][n - 1];
         }
 
         return x;

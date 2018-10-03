@@ -5,9 +5,7 @@ import java.io.FileNotFoundException;
 
 import static utils.Actions.getLastColumn;
 import static utils.Actions.getWithoutLastColumn;
-import static utils.InputOutput.printMatrix;
-import static utils.InputOutput.printVector;
-import static utils.InputOutput.readMatrixFromFile;
+import static utils.InputOutput.*;
 
 public class Lab_2 {
 

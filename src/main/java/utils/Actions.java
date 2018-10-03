@@ -17,34 +17,22 @@ public class Actions {
         return matrix;
     }
 
-    public static double[][] transformMatrix(double[][] a, int k) {
-        double[][] copy = copyMatrix(a);
-        int maxIndex = getMaxIndex(a, k);
-        double temp;
-        for (int i = 0; i < a.length; i++) {
-            temp = a[k][i];
-            copy[k][i] = a[maxIndex][i];
-            copy[maxIndex][i] = temp;
-        }
-        return copy;
-    }
-
-    public static double[] transformVector(double[][] a, double[] b, int k) {
-        int maxIndex = getMaxIndex(a, k);
-        double[] copy = copyVector(b);
-        double temp;
-        temp = copy[k];
-        copy[k] = copy[maxIndex];
-        copy[maxIndex] = temp;
-        return copy;
-    }
-
-    private static int getMaxIndex(double[][] a, int k) {
+    public static void transform(double[][] a, double[] b, int k) {
         int maxIndex = k;
         for (int i = k; i < a.length; i++) {
             maxIndex = Math.abs(a[i][k]) >= Math.abs(a[maxIndex][k]) ? i : maxIndex;
         }
-        return maxIndex;
+        if (maxIndex != k) {
+            double temp;
+            for (int i = 0; i < a.length; i++) {
+                temp = a[k][i];
+                a[k][i] = a[maxIndex][i];
+                a[maxIndex][i] = temp;
+            }
+            temp = b[k];
+            b[k] = b[maxIndex];
+            b[maxIndex] = temp;
+        }
     }
 
     public static double[][] copyMatrix(double[][] a) {
