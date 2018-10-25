@@ -9,6 +9,8 @@ import static utils.Actions.writeDigits;
 
 public class InputOutput {
 
+    public static final String FILE_PATH = "src/main/java/files/";
+
     public static void printVector(double[] vector) {
         System.err.print("[");
         for (double i : vector) {

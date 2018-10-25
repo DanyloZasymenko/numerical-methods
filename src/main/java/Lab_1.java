@@ -8,13 +8,11 @@ import static utils.InputOutput.*;
 
 public class Lab_1 {
 
-    private static final String INPUT_FILE_PATH = "matrix.txt";
-//    private static final String INPUT_FILE_PATH = "matrix5.txt";
-//        private static final String INPUT_FILE_PATH = "matrix1.txt";
-//        private static final String INPUT_FILE_PATH = "matrix2.txt";
-//    private static final String INPUT_FILE_PATH = "matrix3.txt";
-//    private static final String INPUT_FILE_PATH = "matrix4.txt";
-    private static final String OUTPUT_FILE_PATH = "result.txt";
+    private static final String INPUT_FILE_PATH = FILE_PATH + "lab1/matrix1.txt";
+    //        private static final String INPUT_FILE_PATH = FILE_PATH +"lab1/matrix2.txt";
+//        private static final String INPUT_FILE_PATH = FILE_PATH +"lab1/matrix3.txt";
+//        private static final String INPUT_FILE_PATH = FILE_PATH +"lab1/matrix4.txt";
+    private static final String OUTPUT_FILE_PATH = FILE_PATH + "lab1/result.txt";
     private static final Boolean APPEND = false;
 
     public static void main(String[] args) throws IOException {
@@ -43,7 +41,7 @@ public class Lab_1 {
             } else {
                 System.err.println("Can not do anything");
             }
-        }catch (GaussMethodException e){
+        } catch (GaussMethodException e) {
             System.err.println(e.getMessage());
         }
     }

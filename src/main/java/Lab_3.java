@@ -8,11 +8,11 @@ import static utils.InputOutput.*;
 
 public class Lab_3 {
 
-//    private static final String INPUT_FILE_PATH = "matrix8.txt";
-//    private static final String INPUT_FILE_PATH = "matrix9.txt";
-//    private static final String INPUT_FILE_PATH = "matrix10.txt";
-    private static final String INPUT_FILE_PATH = "matrix11.txt";
-    private static final String OUTPUT_FILE_PATH = "result.txt";
+    private static final String INPUT_FILE_PATH = FILE_PATH + "lab3/matrix1.txt";
+//    private static final String INPUT_FILE_PATH = FILE_PATH + "lab3/matrix2.txt";
+//    private static final String INPUT_FILE_PATH = FILE_PATH + "lab3/matrix3.txt";
+//    private static final String INPUT_FILE_PATH = FILE_PATH + "lab3/matrix4.txt";
+    private static final String OUTPUT_FILE_PATH = FILE_PATH + "lab3/result.txt";
 
     public static void main(String[] args) {
         Scanner scanner1 = new Scanner(System.in);
@@ -36,22 +36,22 @@ public class Lab_3 {
             System.err.print("Do you want to enter x[0](y - yes, n - no):");
             String wantToEnterX = scanner2.nextLine();
             double[] x = new double[a.length];
-            if (wantToEnterX.equals("y")||wantToEnterX.equals("yes")){
+            if (wantToEnterX.equals("y") || wantToEnterX.equals("yes")) {
                 for (int i = 0; i < x.length; i++) {
-                    System.err.print("x["+(i+1)+"]: ");
+                    System.err.print("x[" + (i + 1) + "]: ");
                     x[i] = Double.parseDouble(scanner3.nextLine());
                 }
                 method.setX0(x);
-            }else if(wantToEnterX.equals("n")||wantToEnterX.equals("no")){
+            } else if (wantToEnterX.equals("n") || wantToEnterX.equals("no")) {
                 for (int i = 0; i < a.length; i++) {
                     for (int j = 0; j < a[0].length; j++) {
-                        if(i==j){
+                        if (i == j) {
                             x[i] = a[i][j];
                         }
                     }
                 }
                 method.setX0(x);
-            }else {
+            } else {
                 System.err.println("Don't understand your input!");
             }
             System.err.print("x0: ");
