@@ -73,7 +73,7 @@ public class GaussMethod implements Method {
         double[][] m = new double[n][n];
         double[] x = new double[n];
         for (int k = 0; k < n - 1; k++) {
-            transform(a, k);
+//            transform(a, k);
             for (int i = k + 1; i < n; i++) {
                 m[i][k] = -(a[i][k] / a[k][k]);
                 for (int j = k + 1; j < n; j++) {

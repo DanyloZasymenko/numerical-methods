@@ -8,9 +8,10 @@ import static utils.InputOutput.*;
 
 public class Lab_1 {
 
-//    private static final String INPUT_FILE_PATH = "matrix.txt";
-        private static final String INPUT_FILE_PATH = "matrix1.txt";
-    //    private static final String INPUT_FILE_PATH = "matrix2.txt";
+    private static final String INPUT_FILE_PATH = "matrix.txt";
+//    private static final String INPUT_FILE_PATH = "matrix5.txt";
+//        private static final String INPUT_FILE_PATH = "matrix1.txt";
+//        private static final String INPUT_FILE_PATH = "matrix2.txt";
 //    private static final String INPUT_FILE_PATH = "matrix3.txt";
 //    private static final String INPUT_FILE_PATH = "matrix4.txt";
     private static final String OUTPUT_FILE_PATH = "result.txt";
@@ -26,7 +27,7 @@ public class Lab_1 {
         try {
             if (matrix.length == matrix[0].length) {
 //                System.err.println("Determinant of matrix: " + findDeterminant(matrix));
-//                System.err.println("Determinant 2 of matrix: " + method.findDeterminant(matrix));
+                System.err.println("Determinant of matrix: " + method.findDeterminant(matrix));
                 System.err.println("Inverse matrix: ");
                 double[][] inverse = method.invert(matrix);
                 printMatrix(inverse);

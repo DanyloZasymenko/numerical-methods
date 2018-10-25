@@ -1,8 +1,12 @@
 package utils;
 
+import exceptions.GaussMethodException;
+
 public class Actions {
 
     private static final int N_FORMAT = 8;
+
+    private static final double E = 0.000001;
 
     public static double[][] generateIdentityMatrix(int m, int n) {
         double[][] matrix = new double[m][n];
@@ -17,21 +21,26 @@ public class Actions {
         return matrix;
     }
 
-    public static void transform(double[][] a, double[] b, int k) {
+    public static void transform(double[][] a, double[] b, int k) throws GaussMethodException {
         int maxIndex = k;
         for (int i = k; i < a.length; i++) {
             maxIndex = Math.abs(a[i][k]) >= Math.abs(a[maxIndex][k]) ? i : maxIndex;
         }
-        if (maxIndex != k) {
-            double temp;
-            for (int i = 0; i < a.length; i++) {
-                temp = a[k][i];
-                a[k][i] = a[maxIndex][i];
-                a[maxIndex][i] = temp;
+//        System.err.println(a[maxIndex][k]);
+        if (Math.abs(a[maxIndex][k]) >= E) {
+            if (maxIndex != k) {
+                double temp;
+                for (int i = 0; i < a.length; i++) {
+                    temp = a[k][i];
+                    a[k][i] = a[maxIndex][i];
+                    a[maxIndex][i] = temp;
+                }
+                temp = b[k];
+                b[k] = b[maxIndex];
+                b[maxIndex] = temp;
             }
-            temp = b[k];
-            b[k] = b[maxIndex];
-            b[maxIndex] = temp;
+        } else {
+            throw new GaussMethodException("Max item is zero");
         }
     }
 
@@ -180,6 +189,63 @@ public class Actions {
             for (int j = 0; j < n; j++) {
                 if (matrix[i][j] != matrix[j][i])
                     return false;
+            }
+        }
+        return true;
+    }
+
+    public static double getScalar(double[] a, double[] s) {
+        double[] copyA = copyVector(a);
+        double[] copyS = copyVector(s);
+        double result = 0;
+        for (int i = 0; i < copyA.length; i++) {
+            result += copyA[i] * copyS[i];
+        }
+        return result;
+    }
+
+    public static double[] multiplyVectorOnNumber(double[] a, double s) {
+        double[] result = new double[a.length];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = a[i] * s;
+        }
+        return result;
+    }
+
+    public static double getMaxItem(double... items) {
+        double temp = items[0];
+        for (int i = 1; i < items.length; i++) {
+            if (items[i] > temp) {
+                temp = items[i];
+            }
+        }
+        return temp;
+    }
+
+    public static double[] getS(double[] r) {
+        double[] copy = copyVector(r);
+        double euclideanNorm = 0;
+        for (double i : copy) {
+            euclideanNorm += i * i;
+        }
+        euclideanNorm = Math.sqrt(euclideanNorm);
+        for (int i = 0; i < copy.length; i++) {
+            copy[i] /= euclideanNorm;
+        }
+        return copy;
+    }
+
+    public static boolean hasDiagonalAdvantage(double[][] matrix){
+        double sum;
+        for (int i = 0; i < matrix.length; i++) {
+            sum = .0;
+            for (int j = 0; j < matrix[0].length; j++) {
+                if(i!=j){
+                    sum+=Math.abs(matrix[i][j]);
+                }
+                if(Math.abs(matrix[i][i]) < sum){
+                    return false;
+                }
             }
         }
         return true;

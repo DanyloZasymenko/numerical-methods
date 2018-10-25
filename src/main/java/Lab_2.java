@@ -9,10 +9,11 @@ import static utils.InputOutput.*;
 
 public class Lab_2 {
 
-    //    private static final String INPUT_FILE_PATH = "matrix5.txt";
-//        private static final String INPUT_FILE_PATH = "matrix6.txt";
+        private static final String INPUT_FILE_PATH = "matrix.txt";
+//    private static final String INPUT_FILE_PATH = "matrix5.txt";
+    //    private static final String INPUT_FILE_PATH = "matrix6.txt";
 //    private static final String INPUT_FILE_PATH = "matrix7.txt";
-    private static final String INPUT_FILE_PATH = "matrix1.txt";
+//    private static final String INPUT_FILE_PATH = "matrix1.txt";
     private static final String OUTPUT_FILE_PATH = "result.txt";
 
     public static void main(String[] args) throws IOException {

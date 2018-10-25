@@ -12,7 +12,7 @@ public class InputOutput {
     public static void printVector(double[] vector) {
         System.err.print("[");
         for (double i : vector) {
-            System.err.format(" %7.1f", i);
+            System.err.format(" %7.2f", i);
         }
         System.err.println("]");
     }
