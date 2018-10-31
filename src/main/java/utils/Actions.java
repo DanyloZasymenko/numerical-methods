@@ -122,6 +122,25 @@ public class Actions {
         return result;
     }
 
+    public static double[] multiplyMatrix(double[][] a, double[] b) {
+        int aRows = a.length;
+        int aColumns = a[0].length;
+        int bLength = b.length;
+        double[] result = new double[bLength];
+        if (aColumns != bLength) {
+            throw new IllegalArgumentException("a:Rows: " + aColumns + " do not match B:Columns " + bLength + ".");
+        }
+        for (int i = 0; i < result.length; i++) {
+            result[i] = 0.00000;
+        }
+        for (int i = 0; i < aRows; i++) {
+            for (int j = 0; j < bLength; j++) {
+                result[i] += a[i][j] * b[j];
+            }
+        }
+        return result;
+    }
+
     public static double[][] getWithoutLastColumn(double[][] a) {
         int m = a.length;
         int n = a[0].length - 1;
@@ -212,6 +231,14 @@ public class Actions {
         return result;
     }
 
+    public static double[] divideVectorOnNumber(double[] a, double s) {
+        double[] result = new double[a.length];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = a[i] / s;
+        }
+        return result;
+    }
+
     public static double getMaxItem(double... items) {
         double temp = items[0];
         for (int i = 1; i < items.length; i++) {
@@ -235,15 +262,15 @@ public class Actions {
         return copy;
     }
 
-    public static boolean hasDiagonalAdvantage(double[][] matrix){
+    public static boolean hasDiagonalAdvantage(double[][] matrix) {
         double sum;
         for (int i = 0; i < matrix.length; i++) {
             sum = .0;
             for (int j = 0; j < matrix[0].length; j++) {
-                if(i!=j){
-                    sum+=Math.abs(matrix[i][j]);
+                if (i != j) {
+                    sum += Math.abs(matrix[i][j]);
                 }
-                if(Math.abs(matrix[i][i]) < sum){
+                if (Math.abs(matrix[i][i]) < sum) {
                     return false;
                 }
             }

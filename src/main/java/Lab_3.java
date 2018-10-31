@@ -1,23 +1,18 @@
 import exceptions.JacobisMethodException;
 import implementations.JacobisMethod;
 
-import java.util.Scanner;
-
 import static utils.Actions.*;
 import static utils.InputOutput.*;
 
 public class Lab_3 {
 
     private static final String INPUT_FILE_PATH = FILE_PATH + "lab3/matrix1.txt";
-//    private static final String INPUT_FILE_PATH = FILE_PATH + "lab3/matrix2.txt";
+    //    private static final String INPUT_FILE_PATH = FILE_PATH + "lab3/matrix2.txt";
 //    private static final String INPUT_FILE_PATH = FILE_PATH + "lab3/matrix3.txt";
 //    private static final String INPUT_FILE_PATH = FILE_PATH + "lab3/matrix4.txt";
     private static final String OUTPUT_FILE_PATH = FILE_PATH + "lab3/result.txt";
 
     public static void main(String[] args) {
-        Scanner scanner1 = new Scanner(System.in);
-        Scanner scanner2 = new Scanner(System.in);
-        Scanner scanner3 = new Scanner(System.in);
         try {
             double[][] matrix = readMatrixFromFile(INPUT_FILE_PATH);
             JacobisMethod method = new JacobisMethod();
@@ -31,15 +26,15 @@ public class Lab_3 {
                 System.err.println("The matrix has diagonal advantage!");
             }
             System.err.print("Enter E:");
-            double e = scanner1.nextDouble();
+            double e = DOUBLE_SCANNER.nextDouble();
             method.setE(e);
             System.err.print("Do you want to enter x[0](y - yes, n - no):");
-            String wantToEnterX = scanner2.nextLine();
+            String wantToEnterX = STRING_SCANNER.nextLine();
             double[] x = new double[a.length];
             if (wantToEnterX.equals("y") || wantToEnterX.equals("yes")) {
                 for (int i = 0; i < x.length; i++) {
                     System.err.print("x[" + (i + 1) + "]: ");
-                    x[i] = Double.parseDouble(scanner3.nextLine());
+                    x[i] = DOUBLE_SCANNER.nextDouble();
                 }
                 method.setX0(x);
             } else if (wantToEnterX.equals("n") || wantToEnterX.equals("no")) {
@@ -52,7 +47,7 @@ public class Lab_3 {
                 }
                 method.setX0(x);
             } else {
-                System.err.println("Don't understand your input!");
+                throw new JacobisMethodException("Wrong input!");
             }
             System.err.print("x0: ");
             printVector(x);
@@ -61,7 +56,7 @@ public class Lab_3 {
             printVector(result);
             writeVectorIntoFile(result, OUTPUT_FILE_PATH, false);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         }
 
     }

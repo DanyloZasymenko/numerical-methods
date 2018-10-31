@@ -23,7 +23,7 @@ public class JacobisMethod implements Method {
         for (int i = 0; i < a.length; i++) {
             sum = 0.0;
             for (int j = 0; j < a[0].length; j++) {
-                if(i!=j) {
+                if (i != j) {
                     sum += Math.abs(a[i][j] / a[i][i]);
                 }
             }
@@ -34,7 +34,7 @@ public class JacobisMethod implements Method {
         for (int i = 0; i < x0.length; i++) {
             x[i] = x0[i];
         }
-        if(q==1){
+        if (q == 1) {
             q = 0.99;
         }
         do {

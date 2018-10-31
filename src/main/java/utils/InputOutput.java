@@ -11,10 +11,14 @@ public class InputOutput {
 
     public static final String FILE_PATH = "src/main/java/files/";
 
+    public static final Scanner STRING_SCANNER = new Scanner(System.in);
+    public static final Scanner DOUBLE_SCANNER = new Scanner(System.in);
+    public static final Scanner INTEGER_SCANNER = new Scanner(System.in);
+
     public static void printVector(double[] vector) {
         System.err.print("[");
         for (double i : vector) {
-            System.err.format(" %7.2f", i);
+            System.err.format(" %7.3f", i);
         }
         System.err.println("]");
     }
