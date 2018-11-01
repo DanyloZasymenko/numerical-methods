@@ -1,11 +1,12 @@
 import implementations.SPAlgorithm;
 
+import static utils.Actions.isSymmetric;
 import static utils.InputOutput.*;
 
 public class Lab_4 {
 
-//    private static final String INPUT_FILE_PATH = FILE_PATH + "lab4/matrix1.txt";
-            private static final String INPUT_FILE_PATH = FILE_PATH + "lab4/matrix2.txt";
+    private static final String INPUT_FILE_PATH = FILE_PATH + "lab4/matrix1.txt";
+//    private static final String INPUT_FILE_PATH = FILE_PATH + "lab4/matrix2.txt";
 //    private static final String INPUT_FILE_PATH = FILE_PATH + "lab4/matrix3.txt";
     private static final String OUTPUT_FILE_PATH = FILE_PATH + "lab4/result.txt";
 
@@ -15,6 +16,10 @@ public class Lab_4 {
             SPAlgorithm algorithm = new SPAlgorithm();
             System.err.println("Input matrix: ");
             printMatrix(matrix);
+            if (!isSymmetric(matrix))
+                throw new Exception("Matrix is not symmetric!");
+            else
+                System.err.println("Matrix is symmetric!");
             System.err.print("Enter E:");
             double e = DOUBLE_SCANNER.nextDouble();
             System.err.print("Do you want to enter y[0](y - yes, n - no):");
