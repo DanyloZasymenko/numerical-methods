@@ -1,5 +1,5 @@
-import exceptions.JacobisMethodException;
-import implementations.JacobisMethod;
+import exceptions.JacobiMethodException;
+import implementations.JacobiMethod;
 
 import static utils.Actions.*;
 import static utils.InputOutput.*;
@@ -15,13 +15,13 @@ public class Lab_3 {
     public static void main(String[] args) {
         try {
             double[][] matrix = readMatrixFromFile(INPUT_FILE_PATH);
-            JacobisMethod method = new JacobisMethod();
+            JacobiMethod method = new JacobiMethod();
             System.err.println("Input matrix: ");
             double[][] a = getWithoutLastColumn(matrix);
             double[] b = getLastColumn(matrix);
             printMatrix(a, b);
             if (!hasDiagonalAdvantage(a)) {
-                throw new JacobisMethodException("The matrix do not have diagonal advantage!");
+                throw new JacobiMethodException("The matrix do not have diagonal advantage!");
             } else {
                 System.err.println("The matrix has diagonal advantage!");
             }
@@ -47,7 +47,7 @@ public class Lab_3 {
                 }
                 method.setX0(x);
             } else {
-                throw new JacobisMethodException("Wrong input!");
+                throw new JacobiMethodException("Wrong input!");
             }
             System.err.print("x0: ");
             printVector(x);

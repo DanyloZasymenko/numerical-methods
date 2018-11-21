@@ -1,18 +1,18 @@
 package implementations;
 
-import exceptions.JacobisMethodException;
+import exceptions.JacobiMethodException;
 import interfaces.Method;
 
 import static utils.Actions.copyMatrix;
 import static utils.Actions.copyVector;
 
-public class JacobisMethod implements Method {
+public class JacobiMethod implements Method {
 
     private double e;
 
     private double[] x0;
 
-    public double[] calculate(double[][] matrix, double[] vector) throws JacobisMethodException {
+    public double[] calculate(double[][] matrix, double[] vector) throws JacobiMethodException {
         double[][] a = copyMatrix(matrix);
         double[] b = copyVector(vector);
         int n = a.length;
@@ -64,7 +64,7 @@ public class JacobisMethod implements Method {
         return e;
     }
 
-    public JacobisMethod setE(double e) {
+    public JacobiMethod setE(double e) {
         this.e = e;
         return this;
     }
@@ -73,7 +73,7 @@ public class JacobisMethod implements Method {
         return x0;
     }
 
-    public JacobisMethod setX0(double[] x0) {
+    public JacobiMethod setX0(double[] x0) {
         this.x0 = x0;
         return this;
     }
