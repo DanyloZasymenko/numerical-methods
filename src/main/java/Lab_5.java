@@ -13,6 +13,8 @@ public class Lab_5 {
     private static final int WIDTH = 1500;
     private static final int HEIGHT = 1000;
 
+    private static final int GRID_BOUND = 7;
+
     private static final Function FUNCTION = new Function_6();
 
     public static void main(String[] args) {
@@ -20,7 +22,8 @@ public class Lab_5 {
         frame.setSize(WIDTH + 50, HEIGHT + 50);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setLayout(new BorderLayout());
-        frame.add(new DrawSine(WIDTH, HEIGHT, FUNCTION), BorderLayout.CENTER);
+        frame.add(new DrawSine(WIDTH, HEIGHT, FUNCTION).setGridBounds(-GRID_BOUND, GRID_BOUND, -GRID_BOUND, GRID_BOUND)
+                .setPlotBounds(-GRID_BOUND, GRID_BOUND), BorderLayout.CENTER);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
@@ -34,7 +37,7 @@ public class Lab_5 {
             System.err.print("Enter e: ");
             double e = DOUBLE_SCANNER.nextDouble();
             System.err.println("Result: " + method.calculate(a, b, e, FUNCTION));
-        }catch (Exception e){
+        } catch (Exception e) {
             System.err.println(e.getMessage());
         }
 
