@@ -1,11 +1,11 @@
 package implementations;
 
 import exceptions.OrthogonalizationMethodException;
-import interfaces.Method;
+import interfaces.MatrixMethod;
 
 import static utils.Actions.*;
 
-public class OrthogonalizationMethod implements Method {
+public class OrthogonalizationMethod implements MatrixMethod {
 
     public double[] calculate(double[][] matrix, double[] vector) throws OrthogonalizationMethodException {
         int n = matrix.length + 1;

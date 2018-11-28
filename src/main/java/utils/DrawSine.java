@@ -1,6 +1,7 @@
 package utils;
 
 import interfaces.Function;
+import interfaces.Integral;
 import interfaces.Polynomial;
 
 import javax.swing.*;
@@ -22,11 +23,14 @@ public class DrawSine extends JPanel {
 
     private Function function;
     private Polynomial polynomial;
+    private Integral integral;
 
     public DrawSine(int width, int height, Function function) {
         this.width = width;
         this.height = height;
         this.function = function;
+        x_begin = x_min;
+        x_end = x_max;
     }
 
     public DrawSine(int width, int height, Polynomial polynomial, double[] listX, double[] listY) {
@@ -35,8 +39,16 @@ public class DrawSine extends JPanel {
         this.polynomial = polynomial;
         this.listX = listX;
         this.listY = listY;
-        this.x_begin = listX[0];
-        this.x_end = listX[listX.length - 1];
+        x_begin = listX[0];
+        x_end = listX[listX.length - 1];
+    }
+
+    public DrawSine(int width, int height, Integral integral) {
+        this.width = width;
+        this.height = height;
+        this.integral = integral;
+        x_begin = integral.getLowerBound();
+        x_end = integral.getUpperBound();
     }
 
     protected void paintComponent(Graphics g) {
@@ -81,19 +93,27 @@ public class DrawSine extends JPanel {
             drawPlot(x_zero, y_zero, p, function, x_step, y_step);
         } else if (polynomial != null) {
             drawPlot(x_zero, y_zero, p, polynomial, x_step, y_step);
+        } else if (integral != null) {
+            drawPlot(x_zero, y_zero, p, integral, x_step, y_step);
         }
         g.drawPolyline(p.xpoints, p.ypoints, p.npoints);
     }
 
     private void drawPlot(int x_zero, int y_zero, Polygon p, Function function, int x_step, int y_step) {
-        for (int x = (int) x_begin * x_step + y_zero; x <= (int) x_end * x_step + y_zero; x++) {
+        for (int x = (int) x_begin * x_step + y_zero; x <= (int) (x_end * x_step + y_zero); x++) {
             p.addPoint(x, (int) (x_zero - (y_step * function.calculate((x - y_zero) / (double) x_step))));
         }
     }
 
     private void drawPlot(int x_zero, int y_zero, Polygon p, Polynomial polynomial, int x_step, int y_step) {
-        for (int x = (int) x_begin * x_step + y_zero; x <= (int) x_end * x_step + y_zero; x++) {
+        for (int x = (int) x_begin * x_step + y_zero; x <= (int) (x_end * x_step + y_zero); x++) {
             p.addPoint(x, (int) (x_zero - (y_step * polynomial.calculate(listX, listY, (x - y_zero) / (double) x_step))));
+        }
+    }
+
+    private void drawPlot(int x_zero, int y_zero, Polygon p, Integral integral, int x_step, int y_step) {
+        for (int x = (int) x_begin * x_step + y_zero; x <= (int) (x_end * x_step + y_zero); x++) {
+            p.addPoint(x, (int) (x_zero - (y_step * integral.calculate((x - y_zero) / (double) x_step))));
         }
     }
 

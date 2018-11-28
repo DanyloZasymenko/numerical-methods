@@ -1,6 +1,6 @@
 package interfaces;
 
-public interface Method {
+public interface MatrixMethod {
 
     double[] calculate(double[][] matrix, double[] vector) throws Exception;
 

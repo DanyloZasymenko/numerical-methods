@@ -1,12 +1,12 @@
 package implementations;
 
 import exceptions.JacobiMethodException;
-import interfaces.Method;
+import interfaces.MatrixMethod;
 
 import static utils.Actions.copyMatrix;
 import static utils.Actions.copyVector;
 
-public class JacobiMethod implements Method {
+public class JacobiMethod implements MatrixMethod {
 
     private double e;
 

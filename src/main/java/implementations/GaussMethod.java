@@ -1,11 +1,11 @@
 package implementations;
 
 import exceptions.GaussMethodException;
-import interfaces.Method;
+import interfaces.MatrixMethod;
 
 import static utils.Actions.*;
 
-public class GaussMethod implements Method {
+public class GaussMethod implements MatrixMethod {
 
     public double[] calculate(double[][] matrix, double[] vector) throws GaussMethodException {
         double[][] a = copyMatrix(matrix);
